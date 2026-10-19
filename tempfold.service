@@ -1,0 +1,19 @@
+# Sample per-user unit: install in ~/.config/systemd/user/tempfold.service.
+# %h expands to your home directory. Adjust the executable, target, and range.
+[Unit]
+Description=TempFold temperature-controlled Folding@home
+After=network.target
+After=fah-client.service
+
+[Service]
+Type=exec
+WorkingDirectory=%h
+ExecStart=%h/.local/bin/tempfold --target 20 --range 1 --non-interactive --no-color
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
